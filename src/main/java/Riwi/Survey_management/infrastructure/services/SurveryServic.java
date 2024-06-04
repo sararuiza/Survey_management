@@ -1,5 +1,6 @@
 package Riwi.Survey_management.infrastructure.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,7 @@ import Riwi.Survey_management.api.dto.response.UserBasicResponse;
 import Riwi.Survey_management.domain.entities.SurveyEntity;
 import Riwi.Survey_management.domain.entities.User;
 import Riwi.Survey_management.domain.repositories.SurveyRepository;
+import Riwi.Survey_management.domain.repositories.UserRepository;
 import Riwi.Survey_management.infrastructure.abstrac_service.ISurveyService;
 import Riwi.Survey_management.utils.BadRequestException;
 import Riwi.Survey_management.utils.enums.SortType;
@@ -29,11 +31,22 @@ public class SurveryServic implements ISurveyService {
     
     @Autowired
     private final SurveyRepository surveyRepository;
+
+    @Autowired
+    private final UserRepository userRepository;
     
     @Override
     public SurveyEntityResponse create(SurveyEntityRequest request) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+
+        User user = this.userRepository.findById(request.getCreatorid())
+        .orElseThrow(() -> new BadRequestException(ErrorMessage.idNotFound("user")));
+
+        SurveyEntity survey = this.requestToEntity(request);
+        
+        survey.setQuestion(new ArrayList<>());
+        survey.setCreator(user);
+
+        return entityToResponse(this.surveyRepository.save(survey));
     }
 
     @Override
@@ -107,11 +120,12 @@ public class SurveryServic implements ISurveyService {
     private SurveyEntity requestToEntity(SurveyEntityRequest request){
         
         return SurveyEntity.builder()
-        .id(request.getId())
+        
         .title(request.getTitle())
         .description(request.getDescription())
         .creationDate(request.getCreationDate())
         .active(request.getActive())
+        
         .build();
     }
 
