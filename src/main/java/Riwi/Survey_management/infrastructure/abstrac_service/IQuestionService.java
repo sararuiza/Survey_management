@@ -15,9 +15,9 @@ public interface IQuestionService {
 
     // public QuestionResponse update(RQ request, ID id);
 
-    // public void delete(Long id);
+     public void delete(Long id);
 
-    // public Page<RS> getAll(int page, int size, SortType sortType);
+    //  public Page<QuestionResponse > getAll(int page, int size, SortType sortType);
     
     
     public final String FIELD_BY_SORT = "tipe";
