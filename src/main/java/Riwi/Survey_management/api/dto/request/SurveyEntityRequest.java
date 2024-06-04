@@ -12,11 +12,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SurveyEntityRequest {
-    private Long id;
+    
     private String title;
     private String description;
     private LocalDate creationDate;
     private Boolean active;
+
+    private Long creatorid;
 
     
 }
