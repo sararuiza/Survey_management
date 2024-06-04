@@ -23,13 +23,13 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class UserService implements IUserService {
-    
+
     @Autowired
     private final UserRepository userRepository;
 
     @Override
     public UserResponse create(UserRequest request) {
-        // TODO Auto-generated method stub
+        // TODO Auto-generated method stubsss
         throw new UnsupportedOperationException("Unimplemented method 'create'");
     }
 
@@ -64,48 +64,46 @@ public class UserService implements IUserService {
         }
 
         pagination = PageRequest.of(page, size);
-        
+
         return this.userRepository.findAll(pagination)
                 .map(this::entityToResponse);
     }
 
-    private UserResponse entityToResponse(User entity){
+    private UserResponse entityToResponse(User entity) {
 
         List<SurveyEntityBasicResponse> surveys = entity.getSurvey()
-        .stream()
-        .map(temp -> SurveyEntityBasicResponse.builder()
-        .id(temp.getId())
-        .title(temp.getTitle())
-        .description(temp.getDescription())
-        .creationDate(temp.getCreationDate())
-        .active(temp.getActive())
-        .build())
-        .collect(Collectors.toList());
-        
+                .stream()
+                .map(temp -> SurveyEntityBasicResponse.builder()
+                        .id(temp.getId())
+                        .title(temp.getTitle())
+                        .description(temp.getDescription())
+                        .creationDate(temp.getCreationDate())
+                        .active(temp.getActive())
+                        .build())
+                .collect(Collectors.toList());
 
         return UserResponse.builder()
-        .id(entity.getId())
-        .name(entity.getName())
-        .email(entity.getEmail())
-        .active(entity.getActive())
-        .survey(surveys)
-        .build();
+                .id(entity.getId())
+                .name(entity.getName())
+                .email(entity.getEmail())
+                .active(entity.getActive())
+                .survey(surveys)
+                .build();
     }
 
-
-    private User requestToEntity(UserRequest request){
+    private User requestToEntity(UserRequest request) {
         return User.builder()
-        .id(request.getId())
-        .name(request.getName())
-        .email(request.getEmail())
-        .password(request.getPassword())
-        .active(request.getActive())
-        .build();
+                .id(request.getId())
+                .name(request.getName())
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .active(request.getActive())
+                .build();
     }
 
-    private User find(Long id){
+    private User find(Long id) {
         return this.userRepository.findById(id)
-        .orElseThrow(()->new BadRequestException(ErrorMessage.idNotFound("user")));
+                .orElseThrow(() -> new BadRequestException(ErrorMessage.idNotFound("user")));
     }
-    
+
 }
