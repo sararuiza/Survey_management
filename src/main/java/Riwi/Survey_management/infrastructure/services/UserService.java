@@ -44,14 +44,19 @@ public class UserService implements IUserService {
 
     @Override
     public UserResponse update(UserRequest request, Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        User user = this.find(id);
+
+        user = this.requestToEntity(request);
+
+        user.setSurvey(new ArrayList<>());
+
+        return this.entityToResponse(this.userRepository.save(user));
     }
 
     @Override
     public void delete(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        User user = this.find(id);
+        this.userRepository.delete(user);
     }
 
     @Override
