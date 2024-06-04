@@ -20,6 +20,8 @@ public class SurveyEntityBasicResponse {
     private LocalDate creationDate;
     private Boolean active;
 
+    
+
 
     
 }
