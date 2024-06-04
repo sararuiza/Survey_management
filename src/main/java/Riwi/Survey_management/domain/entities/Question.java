@@ -14,15 +14,16 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import lombok.experimental.SuperBuilder;
+
 
 @Entity(name="question")
 @Data
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class Question {
@@ -38,7 +39,7 @@ public class Question {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "survey_id", referencedColumnName = "id")
-    private Survey survey;
+    private SurveyEntity survey;
 
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

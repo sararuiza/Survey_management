@@ -27,7 +27,7 @@ import lombok.ToString;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Survey {
+public class SurveyEntity {
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
