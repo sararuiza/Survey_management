@@ -1,5 +1,6 @@
 package Riwi.Survey_management.infrastructure.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,8 +30,11 @@ public class UserService implements IUserService {
 
     @Override
     public UserResponse create(UserRequest request) {
-        // TODO Auto-generated method stubsss
-        throw new UnsupportedOperationException("Unimplemented method 'create'");
+        User user = this.requestToEntity(request);
+
+        user.setSurvey(new ArrayList<>());
+
+        return entityToResponse(this.userRepository.save(user));
     }
 
     @Override
